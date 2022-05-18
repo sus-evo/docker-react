@@ -1,0 +1,17 @@
+FROM node:16-alpine
+
+USER node
+
+RUN mkdir -p /home/node/app
+WORKDIR '/home/node/app'
+
+#RUN ls -la /usr/local/lib/node_modules
+
+COPY --chown=node:node ./package.json ./
+RUN npm install
+
+COPY --chown=node:node ./ ./
+
+RUN cat /proc/sys/fs/inotify/max_user_watches
+
+CMD ["npm", "run", "start"]
